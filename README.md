@@ -1,70 +1,21 @@
-# Getting Started with Create React App
+# Twitter Clone with React and Firebase
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+이 레포지토리는 React와 Firebase를 사용하여 트위터의 기본 기능을 클론한 프로젝트입니다. 이 프로젝트는 실시간 데이터베이스 기능, 인증, 스토리지 등 Firebase의 주요 기능을 활용하고 있습니다.
 
-## Available Scripts
+## 주요 기능
 
-In the project directory, you can run:
+1. **사용자 인증**: Firebase Authentication을 사용하여 사용자 로그인 및 회원가입 기능을 구현하였습니다. 이메일/비밀번호를 이용한 인증 외에도 Google, Facebook 등의 소셜 로그인 기능을 지원합니다.
 
-### `npm start`
+2. **트윗 작성 및 조회**: 사용자는 텍스트 또는 이미지를 포함한 트윗을 작성할 수 있습니다. Firebase Firestore를 사용하여 트윗 데이터를 실시간으로 저장하고 조회합니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+3. **프로필 관리**: 사용자는 자신의 프로필 사진 및 닉네임을 변경할 수 있습니다. Firebase Storage를 사용하여 프로필 사진을 저장하고 관리합니다.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 사용된 기술 스택
 
-### `npm test`
+- **React**: 프론트엔드는 React를 사용하여 구현하였습니다. React는 컴포넌트 기반의 라이브러리로, 재사용 가능한 UI를 만드는 데 유용합니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Firebase**: 백엔드는 Firebase를 사용하여 구현하였습니다. Firebase는 구글이 제공하는 BaaS(Backend as a Service)로, 실시간 데이터베이스, 사용자 인증, 클라우드 스토리지 등 다양한 기능을 제공합니다.
 
-### `npm run build`
+- **CSS-in-JS**: 스타일링은 CSS-in-JS 라이브러리인 styled-components를 사용하였습니다. 이를 통해 컴포넌트 스코프의 CSS를 작성할 수 있습니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+이 프로젝트는 React와 Firebase를 사용하여 실제 웹 애플리케이션을 구현하는 방법을 배울 수 있는 좋은 예제입니다. 또한, 이 프로젝트를 통해 실시간 웹 애플리케이션의 작동 원리를 이해하고, 클라우드 기반 백엔드 서비스를 사용하는 방법을 익힐 수 있습니다.
