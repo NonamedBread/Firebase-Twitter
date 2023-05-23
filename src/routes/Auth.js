@@ -6,6 +6,7 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState("");
+  const auth = authService.getAuth();
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -20,7 +21,6 @@ const Auth = () => {
     e.preventDefault();
     try {
       let data;
-      const auth = authService.getAuth();
 
       if (newAccount) {
         data = await authService.createUserWithEmailAndPassword(
@@ -42,6 +42,18 @@ const Auth = () => {
   };
 
   const toggleAccount = () => setNewAccount((prev) => !prev);
+
+  const onSocialClick = async (e) => {
+    const { name } = e.target;
+    let provider;
+    if (name === "google") {
+      provider = new authService.GoogleAuthProvider();
+    } else if (name === "github") {
+      provider = new authService.GithubAuthProvider();
+    }
+    const data = await authService.signInWithPopup(auth, provider);
+    console.log(data);
+  };
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -68,8 +80,12 @@ const Auth = () => {
         {newAccount ? "Sign In" : "Create Account"}
       </span>
       <div>
-        <button>Continue with Google</button>
-        <button>Continue with Github</button>
+        <button name="google" onClick={onSocialClick}>
+          Continue with Google
+        </button>
+        <button name="github" onClick={onSocialClick}>
+          Continue with Github
+        </button>
       </div>
     </div>
   );

@@ -3,6 +3,10 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  signInWithPopup,
+  signOut,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -23,6 +27,10 @@ export const authService = {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  signInWithPopup,
+  signOut,
   onAuthStateChanged: (callback) => {
     return auth.onAuthStateChanged(callback);
   },
