@@ -8,6 +8,12 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  serverTimestamp,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -22,6 +28,7 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 const auth = getAuth();
+const firestore = getFirestore();
 
 export const authService = {
   getAuth,
@@ -36,4 +43,9 @@ export const authService = {
   },
 };
 
-export default authService;
+export const dbService = {
+  firestore,
+  addDoc,
+  collection,
+  serverTimestamp,
+};
