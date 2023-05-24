@@ -14,6 +14,7 @@ import {
   collection,
   serverTimestamp,
   getDocs,
+  onSnapshot,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -50,4 +51,5 @@ export const dbService = {
   collection,
   serverTimestamp,
   getDocs,
+  onSnapshot,
 };
