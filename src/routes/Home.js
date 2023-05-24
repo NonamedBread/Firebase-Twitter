@@ -1,26 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { dbService } from "fbase";
 
 const Home = () => {
-  const [tweet, SetTweet] = useState("");
-  const onSubmit = (e) => {
-    e.preventDeafault();
+  const [tweet, setTweet] = useState("");
+  const [tweets, setTweets] = useState([]);
+  const getNtweets = async () => {
+    const dbTweets = await dbService.getDocs(
+      dbService.collection(dbService.firestore, "tweets")
+    );
+    dbTweets.forEach((doc) => {
+      const tweetObj = {
+        ...doc.data(),
+        id: doc.id,
+      };
+      setTweets((prev) => [tweetObj, ...prev]);
+    });
+  };
+
+  useEffect(() => {
+    getNtweets();
+  }, []);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await dbService.addDoc(
+        dbService.collection(dbService.firestore, "tweets"),
+        {
+          tweet,
+          createdAt: dbService.serverTimestamp(),
+        }
+      );
+      setTweet("");
+    } catch (error) {
+      console.log(error);
+    }
   };
   const onChange = (e) => {
     const { value } = e.target;
-    SetTweet(value);
-    console.log(tweet);
+    setTweet(value);
   };
+  console.log(tweets);
   return (
     <div>
-      <form>
+      <form onSubmit={onSubmit}>
         <input
           type="text"
           value={tweet}
-          onChange={onChange}
           placeholder="What's on your mind?"
           maxLength={120}
+          onChange={onChange}
         ></input>
-        <input type="submit" placeholder="Tweet"></input>
+        <input type="submit" value="Tweet"></input>
       </form>
     </div>
   );
