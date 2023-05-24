@@ -4,17 +4,16 @@ import { dbService } from "fbase";
 const Home = () => {
   const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
+
   const getNtweets = async () => {
     const dbTweets = await dbService.getDocs(
       dbService.collection(dbService.firestore, "tweets")
     );
-    dbTweets.forEach((doc) => {
-      const tweetObj = {
-        ...doc.data(),
-        id: doc.id,
-      };
-      setTweets((prev) => [tweetObj, ...prev]);
-    });
+    const fetchedTweets = dbTweets.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    setTweets(fetchedTweets);
   };
 
   useEffect(() => {
@@ -53,6 +52,13 @@ const Home = () => {
         ></input>
         <input type="submit" value="Tweet"></input>
       </form>
+      <div>
+        {tweets.map((tweet) => (
+          <div key={tweet.id}>
+            <h4>{tweet.tweet}</h4>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
