@@ -51,8 +51,7 @@ const Auth = () => {
     } else if (name === "github") {
       provider = new authService.GithubAuthProvider();
     }
-    const data = await authService.signInWithPopup(auth, provider);
-    console.log(data);
+    await authService.signInWithPopup(auth, provider);
   };
   return (
     <div>

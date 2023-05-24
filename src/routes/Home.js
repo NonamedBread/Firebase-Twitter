@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { dbService } from "fbase";
 
-const Home = () => {
+const Home = (userObj) => {
+  console.log(userObj);
   const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
 
@@ -26,8 +27,9 @@ const Home = () => {
       await dbService.addDoc(
         dbService.collection(dbService.firestore, "tweets"),
         {
-          tweet,
+          text: tweet,
           createdAt: dbService.serverTimestamp(),
+          creatorId: userObj.uid,
         }
       );
       setTweet("");
@@ -39,7 +41,6 @@ const Home = () => {
     const { value } = e.target;
     setTweet(value);
   };
-  console.log(tweets);
   return (
     <div>
       <form onSubmit={onSubmit}>
