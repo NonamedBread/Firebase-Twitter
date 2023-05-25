@@ -18,6 +18,9 @@ import {
   doc,
   deleteDoc,
   updateDoc,
+  where,
+  query,
+  orderBy,
 } from "firebase/firestore";
 
 import {
@@ -66,6 +69,9 @@ export const dbService = {
   doc,
   deleteDoc,
   updateDoc,
+  where,
+  query,
+  orderBy,
 };
 
 export const storageService = {

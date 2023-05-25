@@ -4,7 +4,6 @@ import { dbService, storageService } from "fbase";
 import Tweet from "components/Tweets";
 
 const Home = ({ userObj }) => {
-  console.log(userObj);
   const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
   const [attachment, setAttachment] = useState("");

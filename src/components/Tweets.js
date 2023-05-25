@@ -37,7 +37,6 @@ const Tweet = ({ tweetObj, isOwner }) => {
     const { value } = e.target;
     setNewTweet(value);
   };
-  console.log(tweetObj.text);
   return (
     <div>
       {tweetObj.attachmentURL && (
