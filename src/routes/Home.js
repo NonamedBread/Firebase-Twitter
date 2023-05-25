@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { dbService } from "fbase";
+import { v4 as uuidv4 } from "uuid";
+import { dbService, storageService } from "fbase";
 import Tweet from "components/Tweets";
 
 const Home = ({ userObj }) => {
@@ -23,19 +24,29 @@ const Home = ({ userObj }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await dbService.addDoc(
-        dbService.collection(dbService.firestore, "tweets"),
-        {
-          text: tweet,
-          createdAt: dbService.serverTimestamp(),
-          creatorId: userObj.uid,
-        }
-      );
-      setTweet("");
-    } catch (error) {
-      console.log(error);
-    }
+    const fileRef = storageService.ref(
+      storageService.getStorage(),
+      `${userObj.uid}/${uuidv4()}`
+    );
+    const response = storageService.uploadString(
+      fileRef,
+      attachment,
+      "data_url"
+    );
+    console.log(response);
+    // try {
+    //   await dbService.addDoc(
+    //     dbService.collection(dbService.firestore, "tweets"),
+    //     {
+    //       text: tweet,
+    //       createdAt: dbService.serverTimestamp(),
+    //       creatorId: userObj.uid,
+    //     }
+    //   );
+    //   setTweet("");
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
   const onChange = (e) => {
     const { value } = e.target;
