@@ -7,7 +7,7 @@ const Home = ({ userObj }) => {
   console.log(userObj);
   const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
-  const [attachment, setAttachment] = useState();
+  const [attachment, setAttachment] = useState("");
 
   useEffect(() => {
     dbService.onSnapshot(
@@ -22,28 +22,32 @@ const Home = ({ userObj }) => {
     );
   }, []);
 
-  console.log(tweets);
   const onSubmit = async (e) => {
     e.preventDefault();
-    const fileRef = storageService.ref(
-      storageService.getStorage(),
-      `${userObj.uid}/${uuidv4()}`
-    );
-    const response = await storageService.uploadString(
-      fileRef,
-      attachment,
-      "data_url"
-    );
-    const attachmentUrl = await storageService.getDownloadURL(
-      storageService.ref(storageService.getStorage(), fileRef)
-    );
+    let attachmentUrl = "";
+    if (attachment != "") {
+      const fileRef = storageService.ref(
+        storageService.getStorage(),
+        `${userObj.uid}/${uuidv4()}`
+      );
 
+      const response = await storageService.uploadString(
+        fileRef,
+        attachment,
+        "data_url"
+      );
+
+      attachmentUrl = await storageService.getDownloadURL(
+        storageService.ref(storageService.getStorage(), fileRef)
+      );
+    }
     const tweetObj = {
       text: tweet,
       createdAt: dbService.serverTimestamp(),
       creatorId: userObj.uid,
       attachmentUrl,
     };
+
     try {
       await dbService.addDoc(
         dbService.collection(dbService.firestore, "tweets"),
@@ -73,7 +77,7 @@ const Home = ({ userObj }) => {
 
     reader.readAsDataURL(theFile);
   };
-  const onClearAttachment = () => setAttachment(null);
+  const onClearAttachment = () => setAttachment("");
   return (
     <div>
       <form onSubmit={onSubmit}>

@@ -33,6 +33,14 @@ const Tweet = ({ tweetObj, isOwner }) => {
   console.log(tweetObj.text);
   return (
     <div>
+      {tweetObj.attachmentUrl && (
+        <img
+          src={tweetObj.attachmentUrl}
+          width="200px"
+          height="200px"
+          alt="tweet "
+        ></img>
+      )}
       {editing ? (
         <>
           <form onSubmit={onSubmit}>
