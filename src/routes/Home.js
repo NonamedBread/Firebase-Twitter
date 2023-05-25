@@ -22,6 +22,7 @@ const Home = ({ userObj }) => {
     );
   }, []);
 
+  console.log(tweets);
   const onSubmit = async (e) => {
     e.preventDefault();
     const fileRef = storageService.ref(
@@ -36,20 +37,23 @@ const Home = ({ userObj }) => {
     const attachmentUrl = await storageService.getDownloadURL(
       storageService.ref(storageService.getStorage(), fileRef)
     );
-    console.log(attachmentUrl);
-    // try {
-    //   await dbService.addDoc(
-    //     dbService.collection(dbService.firestore, "tweets"),
-    //     {
-    //       text: tweet,
-    //       createdAt: dbService.serverTimestamp(),
-    //       creatorId: userObj.uid,
-    //     }
-    //   );
-    //   setTweet("");
-    // } catch (error) {
-    //   console.log(error);
-    // }
+
+    const tweetObj = {
+      text: tweet,
+      createdAt: dbService.serverTimestamp(),
+      creatorId: userObj.uid,
+      attachmentUrl,
+    };
+    try {
+      await dbService.addDoc(
+        dbService.collection(dbService.firestore, "tweets"),
+        { tweetObj }
+      );
+      setTweet("");
+      setAttachment("");
+    } catch (error) {
+      console.log(error);
+    }
   };
   const onChange = (e) => {
     const { value } = e.target;
