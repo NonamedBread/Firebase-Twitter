@@ -47,7 +47,7 @@ const Home = ({ userObj }) => {
     try {
       await dbService.addDoc(
         dbService.collection(dbService.firestore, "tweets"),
-        { tweetObj }
+        tweetObj
       );
       setTweet("");
       setAttachment("");

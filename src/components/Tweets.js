@@ -50,7 +50,7 @@ const Tweet = ({ tweetObj, isOwner }) => {
       ) : (
         <>
           <div key={tweetObj.id}>
-            <h4>{tweetObj.tweetObj.text}</h4>
+            <h4>{tweetObj.text}</h4>
             {isOwner && (
               <>
                 <button onClick={onDeleteClik}>Delete Tweet</button>
