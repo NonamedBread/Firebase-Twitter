@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 
 const Tweet = ({ tweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
@@ -9,12 +9,19 @@ const Tweet = ({ tweetObj, isOwner }) => {
     const ok = window.confirm("Are you sure you want to delete this tweet?");
     if (ok) {
       await dbService.deleteDoc(
-        dbService.doc(dbService.firestore, "tweets", `${tweetObj.id}`)
+        dbService.doc(dbService.firestore, "tweets", `${tweetObj.id}`),
+        await storageService.deleteObject(
+          storageService.ref(
+            storageService.getStorage(),
+            tweetObj.attachmentURL
+          )
+        )
       );
     }
   };
 
   const toggleEditing = () => setEditing((prev) => !prev);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     console.log(tweetObj, newTweet);
@@ -33,9 +40,9 @@ const Tweet = ({ tweetObj, isOwner }) => {
   console.log(tweetObj.text);
   return (
     <div>
-      {tweetObj.attachmentUrl && (
+      {tweetObj.attachmentURL && (
         <img
-          src={tweetObj.attachmentUrl}
+          src={tweetObj.attachmentURL}
           width="200px"
           height="200px"
           alt="tweet "

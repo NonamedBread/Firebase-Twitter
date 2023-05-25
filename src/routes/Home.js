@@ -24,8 +24,8 @@ const Home = ({ userObj }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    let attachmentUrl = "";
-    if (attachment != "") {
+    let attachmentURL = "";
+    if (attachment !== "") {
       const fileRef = storageService.ref(
         storageService.getStorage(),
         `${userObj.uid}/${uuidv4()}`
@@ -37,7 +37,7 @@ const Home = ({ userObj }) => {
         "data_url"
       );
 
-      attachmentUrl = await storageService.getDownloadURL(
+      attachmentURL = await storageService.getDownloadURL(
         storageService.ref(storageService.getStorage(), fileRef)
       );
     }
@@ -45,7 +45,7 @@ const Home = ({ userObj }) => {
       text: tweet,
       createdAt: dbService.serverTimestamp(),
       creatorId: userObj.uid,
-      attachmentUrl,
+      attachmentURL,
     };
 
     try {
