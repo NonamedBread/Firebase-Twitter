@@ -6,6 +6,7 @@ const Home = ({ userObj }) => {
   console.log(userObj);
   const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
+  const [attachment, setAttachment] = useState();
 
   useEffect(() => {
     dbService.onSnapshot(
@@ -44,12 +45,17 @@ const Home = ({ userObj }) => {
     const { files } = e.target;
     const theFile = files[0];
     const reader = new FileReader();
+
     reader.onloadend = (e) => {
-      console.log(e);
+      const {
+        currentTarget: { result },
+      } = e;
+      setAttachment(result);
     };
 
     reader.readAsDataURL(theFile);
   };
+  const onClearAttachment = () => setAttachment(null);
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -62,6 +68,12 @@ const Home = ({ userObj }) => {
         ></input>
         <input type="file" accept="image/*" onChange={onFileChange} />
         <input type="submit" value="Tweet" />
+        {attachment && (
+          <div>
+            <img src={attachment} width="50px" height="50px" alt="tweet" />
+            <button onClick={onClearAttachment}>Clear</button>
+          </div>
+        )}
       </form>
       <div>
         {tweets.map((tweet) => (
