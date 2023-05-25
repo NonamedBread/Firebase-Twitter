@@ -20,7 +20,12 @@ import {
   updateDoc,
 } from "firebase/firestore";
 
-import { getStorage, ref, uploadString } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadString,
+  getDownloadURL,
+} from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -66,4 +71,5 @@ export const storageService = {
   getStorage,
   ref,
   uploadString,
+  getDownloadURL,
 };

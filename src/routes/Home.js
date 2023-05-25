@@ -28,12 +28,15 @@ const Home = ({ userObj }) => {
       storageService.getStorage(),
       `${userObj.uid}/${uuidv4()}`
     );
-    const response = storageService.uploadString(
+    const response = await storageService.uploadString(
       fileRef,
       attachment,
       "data_url"
     );
-    console.log(response);
+    const attachmentUrl = await storageService.getDownloadURL(
+      storageService.ref(storageService.getStorage(), fileRef)
+    );
+    console.log(attachmentUrl);
     // try {
     //   await dbService.addDoc(
     //     dbService.collection(dbService.firestore, "tweets"),
