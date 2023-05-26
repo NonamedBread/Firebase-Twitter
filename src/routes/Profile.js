@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { authService, dbService } from "../fbase";
 import { useNavigate } from "react-router-dom";
 
-const Profile = (userObj) => {
+const Profile = ({ userObj }) => {
   const auth = authService.getAuth();
   const navigate = useNavigate();
   const onLogOutClik = () => {
@@ -13,13 +13,13 @@ const Profile = (userObj) => {
     const querySnapshot = await dbService.getDocs(
       dbService.query(
         dbService.collection(dbService.firestore, "tweets"),
-        dbService.where("creatorId", "==", `${userObj.uid}`)
+        dbService.where("creatorId", "==", `${userObj.uid}`),
+        dbService.orderBy("createdAt", "desc")
       )
     );
-    console.log("test");
-    // querySnapshot.docs.map((doc) => {
-    //   console.log(doc.id, "=>", doc.data());
-    // });
+    querySnapshot.docs.forEach((doc) => {
+      console.log(doc.id, "=>", doc.data());
+    });
   };
 
   useEffect(() => {
