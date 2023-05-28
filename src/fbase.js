@@ -7,6 +7,7 @@ import {
   GithubAuthProvider,
   signInWithPopup,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -54,6 +55,7 @@ export const authService = {
   GithubAuthProvider,
   signInWithPopup,
   signOut,
+  updateProfile,
   onAuthStateChanged: (callback) => {
     return auth.onAuthStateChanged(callback);
   },

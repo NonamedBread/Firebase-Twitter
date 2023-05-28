@@ -32,10 +32,19 @@ const Profile = ({ userObj }) => {
     getMyTweets();
   }, []);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (userObj.displayName !== newDisplayName) {
-      console.log(userObj.updateProfile);
+      await authService
+        .updateProfile(auth.currentUser, {
+          displayName: newDisplayName,
+        })
+        .then(() => {
+          console.log("Profile updated successfully.");
+        })
+        .catch((error) => {
+          console.log("Profile update failed:", error);
+        });
     }
   };
   return (
