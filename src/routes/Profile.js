@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { authService, dbService } from "../fbase";
 import { useNavigate } from "react-router-dom";
 
-const Profile = ({ userObj }) => {
+const Profile = ({ userObj, refreshUser }) => {
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const auth = authService.getAuth();
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Profile = ({ userObj }) => {
       )
     );
     querySnapshot.docs.forEach((doc) => {
-      console.log(doc.id, "=>", doc.data());
+      // console.log(doc.id, "=>", doc.data());
     });
   };
 
@@ -46,6 +46,7 @@ const Profile = ({ userObj }) => {
           console.log("Profile update failed:", error);
         });
     }
+    refreshUser();
   };
   return (
     <>
