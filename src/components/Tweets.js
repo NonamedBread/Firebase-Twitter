@@ -11,14 +11,16 @@ const Tweet = ({ tweetObj, isOwner }) => {
     const ok = window.confirm("Are you sure you want to delete this tweet?");
     if (ok) {
       await dbService.deleteDoc(
-        dbService.doc(dbService.firestore, "tweets", `${tweetObj.id}`),
+        dbService.doc(dbService.firestore, "tweets", `${tweetObj.id}`)
+      );
+      if (tweetObj.attachmentURL) {
         await storageService.deleteObject(
           storageService.ref(
             storageService.getStorage(),
             tweetObj.attachmentURL
           )
-        )
-      );
+        );
+      }
     }
   };
 
