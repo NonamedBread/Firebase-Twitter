@@ -22,6 +22,7 @@ import {
   where,
   query,
   orderBy,
+  Timestamp,
 } from "firebase/firestore";
 
 import {
@@ -74,6 +75,7 @@ export const dbService = {
   where,
   query,
   orderBy,
+  Timestamp,
 };
 
 export const storageService = {

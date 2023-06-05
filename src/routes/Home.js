@@ -21,7 +21,7 @@ const Home = ({ userObj }) => {
   }, []);
 
   return (
-    <div>
+    <div style={{ width: "30vw" }}>
       <div className="container">
         <TweetFactory userObj={userObj} />
       </div>

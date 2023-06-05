@@ -2,13 +2,20 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter } from "@fortawesome/free-brands-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faBarChart } from "@fortawesome/free-solid-svg-icons";
 
 const Navigation = ({ userObj }) => (
-  <nav>
-    <ul style={{ display: "flex", justifyContent: "center", marginTop: 50 }}>
+  <nav style={{ paddingRight: "8vw" }}>
+    <ul
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: 50,
+      }}
+    >
       <li>
-        <Link to="/" style={{ marginRight: 10 }}>
+        <Link to="/">
           <FontAwesomeIcon icon={faTwitter} color={"#04AAFF"} size="2x" />
         </Link>
       </li>
@@ -16,7 +23,6 @@ const Navigation = ({ userObj }) => (
         <Link
           to="/profile"
           style={{
-            marginLeft: 10,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -29,6 +35,11 @@ const Navigation = ({ userObj }) => (
               ? `${userObj.displayName}의 Profile`
               : "Profile"}
           </span>
+        </Link>
+      </li>
+      <li>
+        <Link to="/statistics">
+          <FontAwesomeIcon icon={faBarChart} color={"#04AAFF"} size="2x" />
         </Link>
       </li>
     </ul>

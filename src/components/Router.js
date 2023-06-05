@@ -4,6 +4,7 @@ import Auth from "../routes/Auth";
 import Home from "../routes/Home";
 import Navigation from "components/Navigation";
 import Profile from "routes/Profile";
+import Statistics from "components/Statistics";
 
 const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
   return (
@@ -29,6 +30,7 @@ const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
                   <Profile userObj={userObj} refreshUser={refreshUser} />
                 }
               ></Route>
+              <Route path="/statistics" element={<Statistics />}></Route>
             </>
           ) : (
             <Route path="/" element={<Auth />}></Route>
