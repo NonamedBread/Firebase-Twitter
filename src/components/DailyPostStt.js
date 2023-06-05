@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { dbService } from "fbase";
 import ReactApexChart from "react-apexcharts";
 
-const Statistics = () => {
+const DailyPostStt = () => {
   const [delNDocumentCounts, setDelNDocumentCounts] = useState(null);
   const [delYDocumentCounts, setDelYDocumentCounts] = useState(null);
 
@@ -68,7 +68,7 @@ const Statistics = () => {
   }, []);
 
   return (
-    <div style={{ width: "40vw" }}>
+    <>
       {delNDocumentCounts && delYDocumentCounts && (
         <ReactApexChart
           options={{
@@ -174,8 +174,7 @@ const Statistics = () => {
           height={350}
         />
       )}
-    </div>
+    </>
   );
 };
-
-export default Statistics;
+export default DailyPostStt;

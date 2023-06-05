@@ -4,7 +4,7 @@ import Auth from "../routes/Auth";
 import Home from "../routes/Home";
 import Navigation from "components/Navigation";
 import Profile from "routes/Profile";
-import Statistics from "components/Statistics";
+import Statistics from "routes/Statistics";
 
 const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
   return (
