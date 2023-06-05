@@ -278,3 +278,7 @@ li {
   font-size: 12px;
   text-decoration: underline;
 }
+
+.apexcharts-menu-item {
+  color: #04aaff;
+}
