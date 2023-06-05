@@ -9,7 +9,10 @@ const Home = ({ userObj }) => {
 
   useEffect(() => {
     dbService.onSnapshot(
-      dbService.collection(dbService.firestore, "tweets"),
+      dbService.query(
+        dbService.collection(dbService.firestore, "tweets"),
+        dbService.where("del", "==", "N")
+      ),
       (snapshot) => {
         const tweetArray = snapshot.docs.map((doc) => ({
           id: doc.id,

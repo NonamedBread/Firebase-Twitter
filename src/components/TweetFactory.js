@@ -31,6 +31,7 @@ const TweetFactory = ({ userObj }) => {
       createdAt: dbService.serverTimestamp(),
       creatorId: userObj.uid,
       attachmentURL,
+      del: "N",
     };
 
     try {

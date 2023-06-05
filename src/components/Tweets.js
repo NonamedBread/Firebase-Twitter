@@ -7,11 +7,31 @@ const Tweet = ({ tweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
   const [newTweet, setNewTweet] = useState(tweetObj.text);
 
+  // DB 삭제 쿼리
+  // const onDeleteClik = async () => {
+  //   const ok = window.confirm("Are you sure you want to delete this tweet?");
+  //   if (ok) {
+  //     await dbService.deleteDoc(
+  //       dbService.doc(dbService.firestore, "tweets", `${tweetObj.id}`)
+  //     );
+  //     if (tweetObj.attachmentURL) {
+  //       await storageService.deleteObject(
+  //         storageService.ref(
+  //           storageService.getStorage(),
+  //           tweetObj.attachmentURL
+  //         )
+  //       );
+  //     }
+  //   }
+  // };
   const onDeleteClik = async () => {
     const ok = window.confirm("Are you sure you want to delete this tweet?");
     if (ok) {
-      await dbService.deleteDoc(
-        dbService.doc(dbService.firestore, "tweets", `${tweetObj.id}`)
+      await dbService.updateDoc(
+        dbService.doc(dbService.firestore, "tweets", tweetObj.id),
+        {
+          del: "Y",
+        }
       );
       if (tweetObj.attachmentURL) {
         await storageService.deleteObject(
