@@ -32,10 +32,9 @@ const Statistics = () => {
             doc.data().createdAt.toDate() < endDate
         ).length;
 
-        const dateKey = startDate.toLocaleDateString("ko-KR", {
-          month: "2-digit",
-          day: "2-digit",
-        });
+        const month = String(startDate.getMonth() + 1).padStart(2, "0");
+        const day = String(startDate.getDate()).padStart(2, "0");
+        const dateKey = `${month}.${day}`;
 
         counts[dateKey] = count;
         startDate.setDate(startDate.getDate() + 1);
@@ -116,7 +115,7 @@ const Statistics = () => {
           }}
           series={[
             {
-              name: "Document Count",
+              name: "게시물 수",
               data: Object.values(documentCounts),
             },
           ]}
