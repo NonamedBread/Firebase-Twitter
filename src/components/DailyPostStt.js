@@ -8,16 +8,20 @@ const DailyPostStt = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const currentDate = dbService.Timestamp.now(); // 현재 날짜
+      const currentDate = dbService.Timestamp.now().toDate(); // 현재 날짜
       const twoWeeksAgo = new Date();
-      twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14); // 14일 전 날짜
+      twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 13); // 14일 전 날짜
+
+      console.log(currentDate);
+      console.log(twoWeeksAgo);
 
       const querySnapshotDelN = await dbService.getDocs(
         dbService.query(
           dbService.collection(dbService.firestore, "tweets"),
           dbService.where("createdAt", ">=", twoWeeksAgo),
           dbService.where("createdAt", "<=", currentDate),
-          dbService.where("del", "==", "N")
+          dbService.where("del", "==", "N"),
+          dbService.orderBy("createdAt", "desc")
         )
       );
 
@@ -37,12 +41,12 @@ const DailyPostStt = () => {
       for (let i = 0; i < 14; i++) {
         const endDate = new Date(startDate);
         endDate.setDate(endDate.getDate() + 1);
-
-        const countDelN = querySnapshotDelN.docs.filter(
-          (doc) =>
+        const countDelN = querySnapshotDelN.docs.filter((doc) => {
+          return (
             doc.data().createdAt.toDate() >= startDate &&
             doc.data().createdAt.toDate() < endDate
-        ).length;
+          );
+        }).length;
 
         const countDelY = querySnapshotDelY.docs.filter(
           (doc) =>
@@ -57,6 +61,9 @@ const DailyPostStt = () => {
         countsDelN[dateKey] = countDelN;
         countsDelY[dateKey] = countDelY;
 
+        console.log(countDelN);
+        console.log(countDelY);
+
         startDate.setDate(startDate.getDate() + 1);
       }
 
@@ -70,109 +77,110 @@ const DailyPostStt = () => {
   return (
     <>
       {delNDocumentCounts && delYDocumentCounts && (
-        <ReactApexChart
-          options={{
-            chart: {
-              id: "line-chart",
-              toolbar: {
-                tools: {
-                  download: true,
-                  selection: true,
-                  zoom: true,
-                  zoomin: false,
-                  zoomout: false,
-                  pan: false,
-                  reset:
-                    true | '<img src="/static/icons/reset.png" width="20">',
+        <div className="chart__containger">
+          <ReactApexChart
+            options={{
+              chart: {
+                id: "line-chart",
+                toolbar: {
+                  tools: {
+                    download: true,
+                    selection: true,
+                    zoom: true,
+                    zoomin: false,
+                    zoomout: false,
+                    pan: false,
+                    reset:
+                      true | '<img src="/static/icons/reset.png" width="20">',
+                  },
                 },
-                menu: {
-                  itemColors: "#F44336", // 원하는 색상으로 변경
-                },
-              },
-              background: "#1C1C1C",
-            },
-            title: {
-              text: `일일 게시물 수 ${new Date().getFullYear()}년`,
-              align: "left",
-              style: {
-                fontSize: "20px",
-                color: "#ffffff",
-              },
-            },
-            xaxis: {
-              categories: Object.keys(delNDocumentCounts),
-              labels: {
                 style: {
-                  colors: "#ffffff",
+                  border: "1px solid",
                 },
               },
               title: {
-                text: "날짜",
+                text: `일일 게시물 수 ${new Date().getFullYear()}년`,
+                align: "left",
                 style: {
-                  fontSize: "15px",
-                  color: "#ffffff",
+                  fontSize: "20px",
+                  color: "#666666",
                 },
               },
-            },
-            yaxis: [
-              {
+              xaxis: {
+                categories: Object.keys(delNDocumentCounts),
                 labels: {
                   style: {
-                    colors: "#ffffff",
+                    colors: "#666666",
                   },
                 },
                 title: {
-                  text: "게시물",
+                  text: "날짜",
                   style: {
                     fontSize: "15px",
-                    color: "#ffffff",
+                    color: "#666666",
                   },
                 },
+              },
+              yaxis: [
+                {
+                  labels: {
+                    style: {
+                      colors: "#666666",
+                    },
+                  },
+                  title: {
+                    text: "게시물",
+                    style: {
+                      fontSize: "15px",
+                      color: "#666666",
+                    },
+                  },
+                },
+                {
+                  opposite: true,
+                  labels: {
+                    style: {
+                      colors: "#666666",
+                    },
+                  },
+                  title: {
+                    text: "삭제된 게시물",
+                    style: {
+                      fontSize: "15px",
+                      color: "#666666",
+                    },
+                  },
+                },
+              ],
+              grid: {
+                row: {
+                  opacity: 0.5,
+                },
+              },
+              legend: {
+                position: "top",
+                labels: {
+                  colors: "#666666", // 폰트 색상을 빨간색(#FF0000)으로 설정
+                },
+              },
+            }}
+            series={[
+              {
+                name: "게시물",
+                data: Object.values(delNDocumentCounts),
+                color: "#04AAFF",
               },
               {
-                opposite: true,
-                labels: {
-                  style: {
-                    colors: "#ffffff",
-                  },
-                },
-                title: {
-                  text: "삭제된 게시물",
-                  style: {
-                    fontSize: "15px",
-                    color: "#ffffff",
-                  },
-                },
+                name: "삭제된 게시물",
+                data: Object.values(delYDocumentCounts),
+                color: "#FB5500",
+                yAxisIndex: 1,
               },
-            ],
-            grid: {
-              row: {
-                opacity: 0.5,
-              },
-            },
-            legend: {
-              position: "top",
-              labels: {
-                colors: "#ffffff", // 폰트 색상을 빨간색(#FF0000)으로 설정
-              },
-            },
-          }}
-          series={[
-            {
-              name: "게시물",
-              data: Object.values(delNDocumentCounts),
-              color: "#04AAFF",
-            },
-            {
-              name: "삭제된 게시물",
-              data: Object.values(delYDocumentCounts),
-              color: "#FB5500",
-              yAxisIndex: 1,
-            },
-          ]}
-          type="line"
-          height={350}
-        />
+            ]}
+            type="line"
+            height={350}
+          />
+        </div>
       )}
     </>
   );
